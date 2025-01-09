@@ -75,3 +75,16 @@ button:hover {
 #para{
 color: #4CAF50;
 }
+#successMessage {
+  margin: 10px 0;
+}
+
+#feedbackSuccess {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#feedbackSuccess img {
+  display: block;
+  margin: 0 auto;
+}
