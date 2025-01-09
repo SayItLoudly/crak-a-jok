@@ -44,7 +44,13 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Joke List Section */
+/* Feedback Success Style */
+#feedbackStatus {
+  margin-top: 20px;
+  font-size: 18px;
+  color: green;
+}
+
 #jokeList {
   margin: 20px auto;
   padding: 10px;
@@ -72,19 +78,6 @@ button:hover {
     width: 90%;
   }
 }
-#para{
-color: #4CAF50;
-}
-#successMessage {
-  margin: 10px 0;
-}
-
-#feedbackSuccess {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#feedbackSuccess img {
-  display: block;
-  margin: 0 auto;
+#para {
+  color: #4CAF50;
 }
