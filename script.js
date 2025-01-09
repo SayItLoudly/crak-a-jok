@@ -1,4 +1,3 @@
-// Import Firestore methods
 import { db } from './firebase-config.js';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } 
   from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
@@ -7,6 +6,13 @@ import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp }
 const jokeInput = document.getElementById("jokeInput");
 const submitJoke = document.getElementById("submitJoke");
 const jokeList = document.getElementById("jokeList");
+const successMessage = document.getElementById("successMessage");
+const feedbackPage = document.getElementById("feedbackPage");
+
+// Redirect to feedback page
+feedbackPage.addEventListener("click", () => {
+  window.location.href = "feedback.html";
+});
 
 // Add a joke to Firestore
 submitJoke.addEventListener("click", async () => {
@@ -19,6 +25,10 @@ submitJoke.addEventListener("click", async () => {
         timestamp: serverTimestamp(), // Store server time
       });
       jokeInput.value = ""; // Clear input field
+      successMessage.style.display = "block"; // Show success message
+      setTimeout(() => {
+        successMessage.style.display = "none"; // Hide after 3 seconds
+      }, 3000);
     } catch (error) {
       console.error("Error adding joke: ", error);
     }
@@ -35,6 +45,7 @@ onSnapshot(q, (snapshot) => {
     const jokeData = doc.data();
     const div = document.createElement("div");
     div.textContent = jokeData.joke;
+    div.classList.add("joke-item");
     jokeList.appendChild(div);
   });
 });
