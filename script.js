@@ -16,7 +16,7 @@ submitJoke.addEventListener("click", async () => {
     try {
       await addDoc(collection(db, "jokes"), {
         joke: joke,
-        timestamp: serverTimestamp(),
+        timestamp: serverTimestamp(), // Store server time
       });
       jokeInput.value = ""; // Clear input field
     } catch (error) {
