@@ -1,45 +1,41 @@
-// Import Firebase configurations and Firestore methods
+// Import Firebase Firestore methods
 import { db } from './firebase-config.js';
-import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 
-// Select DOM elements
-const feedbackInput = document.getElementById('feedbackInput');
-const submitFeedback = document.getElementById('submitFeedback');
-const feedbackStatus = document.getElementById('feedbackStatus');
+// Select elements
+const feedbackInput = document.getElementById("feedbackInput");
+const submitFeedback = document.getElementById("submitFeedback"); // Matching ID
+const feedbackSuccess = document.getElementById("feedbackSuccess");
 
-// Event listener for feedback submission
-submitFeedback.addEventListener('click', async () => {
-  const feedback = feedbackInput.value.trim(); // Get the user's feedback
+// Debugging log to confirm script is loaded
+console.log("feedback.js loaded successfully.");
+
+// Add feedback to Firestore
+submitFeedback.addEventListener("click", async (e) => {
+  e.preventDefault(); // Prevent page reload
+  const feedback = feedbackInput.value.trim();
+
+  // Debug input value
+  console.log("Feedback submitted:", feedback);
 
   if (feedback) {
     try {
-      // Debugging step: Log the feedback being submitted
-      console.log('Submitting feedback:', feedback);
-
-      // Add feedback to Firestore
-      await addDoc(collection(db, 'feedbacks'), {
+      await addDoc(collection(db, "feedbacks"), {
         feedback: feedback,
-        timestamp: serverTimestamp(), // Record the server time
+        timestamp: serverTimestamp(), // Add server timestamp
       });
 
-      // Debugging step: Log success
-      console.log('Feedback submitted successfully!');
+      // Debug success
+      console.log("Feedback successfully added to Firestore.");
 
-      // Clear the feedback input field
-      feedbackInput.value = '';
-
-      // Update the UI to show success message
-      feedbackStatus.textContent = 'Thank you for your feedback!';
-      feedbackStatus.style.display = 'block'; // Show the success message
-      feedbackInput.style.display = 'none';  // Hide the input field
-      submitFeedback.style.display = 'none'; // Hide the submit button
+      // Show success message
+      feedbackInput.style.display = "none";
+      submitFeedback.style.display = "none";
+      feedbackSuccess.style.display = "block";
     } catch (error) {
-      // Log any error that occurs
-      console.error('Error submitting feedback:', error);
-      alert('An error occurred while submitting your feedback. Please try again later.');
+      console.error("Error submitting feedback:", error);
     }
   } else {
-    // If the feedback field is empty, alert the user
-    alert('Please write feedback before submitting!');
+    alert("Please write some feedback before submitting.");
   }
 });
